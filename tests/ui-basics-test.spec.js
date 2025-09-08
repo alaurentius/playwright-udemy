@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('Browser Context Playwright Test', async ({ browser }) => {
+test('Browser Context Playwright Test', async ({ browser }) => {
 
     // These can be defined, or passed in as fixtures and it will use default config
     const context = await browser.newContext();
@@ -22,7 +22,7 @@ test.only('Browser Context Playwright Test', async ({ browser }) => {
     await signInBtn.click();
     console.log(await cardTitles.first().textContent());
     console.log(await cardTitles.last().textContent());
-    const allTitles = await cardTitles.allTextContents();
+    const allTitles = await cardTitles.allTextContents(); // this metod will not wait by itself until all text contents are retrieved
     console.log(allTitles)
 });
 
