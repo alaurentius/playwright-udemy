@@ -32,3 +32,27 @@ test('Page Playwright Test', async ({ page }) => {
     console.log(await page.title());
     await expect(page).toHaveTitle('Google');
 });
+
+test.only('UI Controls', async ({ page }) => {
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/')
+    const userName = page.locator('#username')
+    const password = page.locator('[type="password"]')
+    const signInBtn = page.locator('#signInBtn')
+    const dropdown = page.locator('select.form-control')
+    const radioBtns = page.locator('.radiotextsty')
+    const termsCheck = page.locator('#terms')
+    const docLink = page.locator("[href*='documents-request']")
+    await dropdown.selectOption('consult') // value attribute
+    // await page.pause();
+    await radioBtns.last().click()
+    await page.locator('#okayBtn').click()
+    // assertion
+    await expect(radioBtns.last()).toBeChecked() // await is needed when performing actions. Tobechecked is an action
+    await termsCheck.click()
+    await expect(termsCheck).toBeChecked() // same here
+    await termsCheck.uncheck()
+    expect(await termsCheck.isChecked()).toBeFalsy(); // in this case await is inside because isChecked is the action
+    await expect(docLink).toHaveAttribute("class", "blinkingText")
+    
+    
+});

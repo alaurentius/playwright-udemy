@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('Dynamically Waits Test', async ({ page }) => {
+test('Dynamically Waits Test', async ({ page }) => {
 
     await page.goto('https://rahulshettyacademy.com/client');
     const userName = page.locator('#userEmail')
