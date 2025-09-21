@@ -53,11 +53,9 @@ test('UI Controls', async ({ page }) => {
     await termsCheck.uncheck()
     expect(await termsCheck.isChecked()).toBeFalsy(); // in this case await is inside because isChecked is the action
     await expect(docLink).toHaveAttribute("class", "blinkingText")
-
-
 });
 
-test.only('Child Windows Test', async ({ browser }) => {
+test('Child Windows Test', async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     const userName = page.locator('#username')
@@ -75,4 +73,5 @@ test.only('Child Windows Test', async ({ browser }) => {
     await userName.fill(extractedText);
     await page.pause()
     console.log(await userName.textContent())
+    console.log(await userName.inputValue())
 });
