@@ -27,7 +27,7 @@ test.beforeAll(async ({ browser }) => {
 
 })
 
-test('Client App login - Session storage', async () => {
+test('Place order - Session storage', async () => {
 
     const usernameEmail = '1RrKgVZUdVko@yopmail.com';
     const productName = 'ZARA COAT 3';
