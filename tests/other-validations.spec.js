@@ -47,3 +47,11 @@ test('Screenshot & Visual comparison', async ({ page }) => {
     await expect(inputDisplay).toBeHidden()
 
 });
+
+test('Visual testing', async ({ page }) => {
+
+
+    await page.goto('https://www.flightradar24.com/51.50,-0.12/6')
+    expect(await page.screenshot()).toMatchSnapshot('landing.png')
+
+});
