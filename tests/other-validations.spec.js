@@ -34,3 +34,16 @@ test('Popup, hover and iframe validations', async ({ page }) => {
     console.log(textFromTitle.split(' ')[1])
     
 })
+
+test('Screenshot & Visual comparison', async ({ page }) => {
+    const inputDisplay = page.locator('#displayed-text')
+    const hideBtn = page.locator('#hide-textbox')
+
+    await page.goto('https://rahulshettyacademy.com/AutomationPractice/')
+    await expect(inputDisplay).toBeVisible()
+    await inputDisplay.screenshot({path: 'temp/screenshot1.png'});
+    await hideBtn.click()
+    await page.screenshot({path: 'temp/screenshot2.png'});
+    await expect(inputDisplay).toBeHidden()
+
+});
