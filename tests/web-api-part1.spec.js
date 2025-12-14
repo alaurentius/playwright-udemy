@@ -1,5 +1,5 @@
 const { test, expect, request } = require('@playwright/test');
-const {APIUtils} = require('./utils/api-utils')
+const { APIUtils } = require('../utils/api-utils')
 
 const loginPayload = { userEmail: "1RrKgVZUdVko@yopmail.com", userPassword: "1RrKgVZUdVko" }
 const createOrderPayload = { orders: [{ country: "Cuba", productOrderedId: "68a961459320a140fe1ca57a" }] }
@@ -11,7 +11,7 @@ test.beforeAll(async () => {
     response = await apiUtils.createOrder(createOrderPayload);
 })
 
-test('Place order - API', async ({ page }) => { 
+test('Place order - API', async ({ page }) => {
 
     await page.addInitScript(value => {
         window.localStorage.setItem('token', value)
@@ -22,7 +22,7 @@ test('Place order - API', async ({ page }) => {
     const ordersIds = page.locator('tbody tr th');
     const orderIdSummary = page.locator('.col-text');
     const viewBtns = page.locator('tbody tr td button.btn-primary');
-    
+
     await page.goto("https://rahulshettyacademy.com/client");
 
     await ordersBtn.click();
