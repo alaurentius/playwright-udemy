@@ -4,7 +4,7 @@ const PoManager = require('../pageobjects/po-manager');
 const dataSet = JSON.parse(JSON.stringify(require('../utils/place-order-test-data.json')));
 
 for (const data of dataSet) {
-    test(`Client App login ${data.productName}`, async ({ page }) => {
+    test(`@Web Client App login ${data.productName}`, async ({ page }) => {
 
         const poManager = new PoManager(page);
 

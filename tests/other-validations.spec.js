@@ -4,7 +4,7 @@ const { text } = require('stream/consumers');
 // test.describe.configure({ mode: 'parallel' });
 test.describe.configure({ mode: 'serial' });
 
-test('Popup, hover and iframe validations', async ({ page }) => {
+test('@Web Popup, hover and iframe validations', async ({ page }) => {
 
     const inputDisplay = page.locator('#displayed-text')
     const hideBtn = page.locator('#hide-textbox')
