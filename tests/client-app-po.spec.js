@@ -39,27 +39,29 @@ for (const data of dataSet) {
 
     });
 
-    customtest(`Client App login - custom test`, async ({ page, testDataForOrder }) => {
 
-        const poManager = new PoManager(page);
-
-        const usernameEmail = testDataForOrder.usernameEmail;
-        const password = testDataForOrder.password;
-        const productName = testDataForOrder.productName;
-
-        const loginPage = poManager.getLoginPage();
-        await loginPage.goTo('https://rahulshettyacademy.com/client');
-        await loginPage.login(usernameEmail, password);
-
-        const dashboardPage = poManager.getDashboardPage();
-        await dashboardPage.searchProduct(productName);
-        await dashboardPage.navigateToCart();
-
-        const cartPage = poManager.getCartPage();
-        await cartPage.verifyProductIsDisplayed(productName);
-        await cartPage.checkout();
-    });
 }
+
+customtest(`Client App login - custom test`, async ({ page, testDataForOrder }) => {
+
+    const poManager = new PoManager(page);
+
+    const usernameEmail = testDataForOrder.usernameEmail;
+    const password = testDataForOrder.password;
+    const productName = testDataForOrder.productName;
+
+    const loginPage = poManager.getLoginPage();
+    await loginPage.goTo('https://rahulshettyacademy.com/clientX');
+    await loginPage.login(usernameEmail, password);
+
+    const dashboardPage = poManager.getDashboardPage();
+    await dashboardPage.searchProduct(productName);
+    await dashboardPage.navigateToCart();
+
+    const cartPage = poManager.getCartPage();
+    await cartPage.verifyProductIsDisplayed(productName);
+    await cartPage.checkout();
+});
 
 
 
