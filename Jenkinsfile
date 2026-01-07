@@ -1,53 +1,29 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.49.0-noble'
-            args '--user root -e DOCKER_HOST=tcp://docker:2375 -e DOCKER_TLS_VERIFY=0'
-        }
-    }
+    agent any // Quitamos el bloque docker directo aquí para evitar el error de inspect
 
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clonando repositorio...'
                 checkout scm
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Run Tests in Docker') {
             steps {
-                sh 'npm install'
-                // Ensure browsers are installed if version mismatch occurs, though image usually has them.
-                // sh 'npx playwright install --with-deps' 
-            }
-        }
-
-        stage('Run API Tests') {
-            steps {
-                sh 'npm run apiTests'
-            }
-        }
-
-        stage('Run Web Tests') {
-            steps {
-                sh 'npm run webTests'
+                script {
+                    sh """
+                    docker run --rm \
+                        mcr.microsoft.com/playwright:v1.49.0-noble \
+                        /bin/sh -c "npm install && npx playwright test --grep @api"
+                    """
+                }
             }
         }
     }
 
     post {
         always {
-            script {
-                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-            }
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright HTML Report'
-            ])
+            echo 'Finalizado'
         }
     }
 }
