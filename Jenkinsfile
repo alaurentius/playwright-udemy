@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.49.0-noble'
+            args '--user root -e DOCKER_HOST=tcp://docker:2375 -e DOCKER_TLS_VERIFY=0'
         }
     }
 
