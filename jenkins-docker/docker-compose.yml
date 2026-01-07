@@ -8,7 +8,9 @@ services:
     networks:
       - jenkins
     environment:
-      - DOCKER_TLS_CERTDIR=
+      - DOCKER_TLS_CERTDIR= # Esto deshabilita explícitamente TLS en dind
+    volumes:
+      - jenkins-data:/var/jenkins_home
     command: --storage-driver overlay2
 
   jenkins:
@@ -21,14 +23,14 @@ services:
     networks:
       - jenkins
     environment:
-      - DOCKER_HOST=tcp://docker:2375
-      - DOCKER_TLS_VERIFY=0
+      - DOCKER_HOST=tcp://docker:2375 # Conectar al puerto no seguro
+      - DOCKER_TLS_VERIFY= # Asegurar que esté vacío
+      - DOCKER_CERT_PATH= # Asegurar que esté vacío
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins-data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - docker
 
@@ -38,3 +40,4 @@ networks:
 
 volumes:
   jenkins-data:
+  jenkins-docker-certs:
