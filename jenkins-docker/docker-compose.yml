@@ -8,10 +8,7 @@ services:
     networks:
       - jenkins
     environment:
-      - DOCKER_TLS_CERTDIR=/certs
-    volumes:
-      - jenkins-docker-certs:/certs
-      - jenkins-data:/var/jenkins_home
+      - DOCKER_TLS_CERTDIR=
     command: --storage-driver overlay2
 
   jenkins:
@@ -23,15 +20,13 @@ services:
     networks:
       - jenkins
     environment:
-      - DOCKER_HOST=tcp://docker:2376
-      - DOCKER_CERT_PATH=/certs
-      - DOCKER_TLS_VERIFY=1
+      - DOCKER_HOST=tcp://docker:2375
+      - DOCKER_TLS_VERIFY=0
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs:ro
     depends_on:
       - docker
 
@@ -41,4 +36,3 @@ networks:
 
 volumes:
   jenkins-data:
-  jenkins-docker-certs:
