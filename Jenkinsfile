@@ -1,35 +1,44 @@
 pipeline {
-    agent any
+    // Definimos el agente globalmente. Todo el pipeline correrá DENTRO de este contenedor.
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            // args:
+            // -u root: Ejecuta como root para evitar problemas de permisos escribiendo en el workspace de Jenkins
+            // --ipc=host: Recomendado por Playwright para evitar crashes de memoria/comunicación en navegadores
+            args '-u root --ipc=host'
+        }
+    }
 
     stages {
-        stage('Checkout') {
+        // No hace falta stage de Checkout explícito, Jenkins lo hace automáticamente en Declarative Pipelines
+        
+        stage('Install Dependencies') {
             steps {
-                checkout scm
+                // Ya estamos DENTRO del contenedor que tiene Node y Playwright preinstalado
+                sh 'npm ci' 
             }
         }
 
-        stage('Run Tests in Docker') {
+        stage('Run API Tests') {
             steps {
-                script {
-                    // Montamos el directorio actual ($WORKSPACE) en /app dentro del contenedor
-                    // y definimos /app como el directorio de trabajo (-w)
-                    sh """
-                    docker run --rm \
-                        -v "\$WORKSPACE":/app \
-                        -w /app \
-                        -e CI=true \
-                        mcr.microsoft.com/playwright:v1.49.0-noble \
-                        /bin/sh -c "npm install && npx playwright test --grep @Api"
-                    """
-                }
+                sh 'npx playwright test --grep @Api'
             }
         }
     }
 
     post {
         always {
-             // Opcional: Publicar reporte HTML si se configuró un volumen para persistirlo fuera del contenedor
-             echo 'Pipeline finalizado'
+             // Como usamos "agent docker", el reporte se genera dentro del contenedor pero en el volumen compartido.
+             // Jenkins puede leerlo sin problemas al terminar.
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright HTML Report'
+            ])
         }
     }
 }
