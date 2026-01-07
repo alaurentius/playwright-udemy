@@ -22,7 +22,7 @@ pipeline {
 
         stage('Run API Tests') {
             steps {
-                sh 'npx playwright test --grep @Api'
+                sh 'npx playwright test --grep @Web'
             }
         }
     }
