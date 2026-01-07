@@ -1,5 +1,5 @@
 pipeline {
-    agent any // Quitamos el bloque docker directo aquí para evitar el error de inspect
+    agent any
 
     stages {
         stage('Checkout') {

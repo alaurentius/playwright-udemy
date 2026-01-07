@@ -16,6 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile.jenkins
     container_name: jenkins-blueocean
+    user: root
     restart: unless-stopped
     networks:
       - jenkins
@@ -27,6 +28,7 @@ services:
       - "50000:50000"
     volumes:
       - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - docker
 
