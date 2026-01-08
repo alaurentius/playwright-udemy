@@ -17,7 +17,9 @@
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.3.0",
     "allure-commandline": "^2.36.0",
-    "allure-playwright": "^3.4.3"
+    "allure-playwright": "^3.4.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
