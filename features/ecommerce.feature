@@ -1,5 +1,6 @@
 Feature: Ecommerce validations
 
+  @Regression
   Scenario: Placing the order
     Given I am logged in to ecommerce application with "1RrKgVZUdVko@yopmail.com" and "1RrKgVZUdVko"
     When "ZARA COAT 3" is added to the cart
