@@ -1,4 +1,4 @@
-class APIUtils {
+export class APIUtils {
 
     constructor(apiContext, loginPayload) {
         this.apiContext = apiContext
@@ -17,7 +17,7 @@ class APIUtils {
     }
 
     async createOrder(createOrderPayload) {
-        const response = {}
+        const response = { token: string, orderId: string }
         response.token = await this.getToken()
         const orderResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order", {
             data: createOrderPayload,
@@ -34,5 +34,3 @@ class APIUtils {
     }
 
 }
-
-module.exports = {APIUtils}
