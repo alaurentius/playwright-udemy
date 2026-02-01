@@ -19,8 +19,6 @@ jobs:
         scriptLocation: 'inlineScript'
         inlineScript: |
           npx playwright test calendar.spec.js --config=playwright.service.config.js
-      addSpnToEnvironment: true
-      workingDirectory: tests/
 
     - task: PublishPipelineArtifact@1
       displayName: Upload Playwright report
